@@ -1,0 +1,35 @@
+version: 2
+
+before:
+  hooks:
+    - go mod download
+
+builds:
+  - id: kubectl-node_pods
+    main: .
+    binary: kubectl-node_pods
+    env:
+      - CGO_ENABLED=0
+    goos:
+      - linux
+      - darwin
+      - windows
+    goarch:
+      - amd64
+      - arm64
+    ignore:
+      - goos: windows
+        goarch: arm64
+
+archives:
+  - id: default
+    builds:
+      - kubectl-node_pods
+    format: tar.gz
+    wrap_in_directory: false
+    name_template: "{{ .Binary }}-{{ .Os }}-{{ .Arch }}"
+    files:
+      - LICENSE
+
+checksum:
+  name_template: "checksums.txt"

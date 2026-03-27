@@ -1,3 +1,4 @@
 kubectl-node_pods
 kubectl-node_pods.exe
 dist/
+node-pods.yaml

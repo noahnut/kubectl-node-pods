@@ -37,26 +37,6 @@ This copies the binary to `$GOPATH/bin`. Make sure that directory is in your `PA
 make build
 ```
 
-### Local krew test (reinstall plugin)
-
-```bash
-make test-release
-```
-
-This command will:
-- build a tarball for your current OS/ARCH
-- generate `node-pods.yaml` from `templates/krew-plugin.yaml.tmpl`
-- uninstall old `node-pods` plugin if present
-- install the new plugin using local manifest/archive
-
-Quick verify:
-
-```bash
-kubectl krew list
-kubectl node-pods --help
-kubectl node-pods
-```
-
 ## Usage
 
 ```bash
@@ -104,10 +84,9 @@ Outputs tarballs for darwin/linux/windows (amd64 & arm64) into `dist/`.
 This project uses `.github/workflows/release.yml`:
 
 1. Trigger on tag push (for example `v0.1.1`)
-2. Build multi-platform archives
-3. Generate `dist/checksums.txt`
-4. Create GitHub release and upload archives + checksums
-5. Generate `krew-plugin.yaml` from the shared template
+2. Run GoReleaser with `.goreleaser.yaml`
+3. Build multi-platform archives (including `LICENSE`) and publish release assets
+4. Run `krew-release-bot` to render `.krew.yaml` and open/update PR in krew-index
 
 Tag and release:
 
@@ -116,16 +95,17 @@ git tag v0.1.1
 git push origin v0.1.1
 ```
 
-After workflow completes, download the generated `krew-plugin.yaml` artifact and use it to update your krew index.
+### Required GitHub secret
 
-## Shared krew manifest template
+- `KREW_TOKEN`: Personal access token used by `krew-release-bot` to push to your fork and create PRs.
 
-- Template: `templates/krew-plugin.yaml.tmpl`
-- Generator: `cmd/gen-manifest`
-- Local `make test-release` and GitHub Actions release workflow both use the same template/generator path.
+## Krew manifest template
+
+- Template: `.krew.yaml` (Go template syntax)
+- Function: `addURIAndSha` is provided by `krew-release-bot` to auto-fill `uri` and `sha256`
 
 ### Why this design
 
-- Avoid duplicate manifest logic in Makefile and CI scripts
-- Keep local testing and CI output consistent
-- Reduce manual YAML editing errors for `sha256`, `uri`, and platform entries
+- Avoid manual `sha256` maintenance
+- Keep release artifacts and krew-index PR generation in one flow
+- Reduce YAML update mistakes for each new version

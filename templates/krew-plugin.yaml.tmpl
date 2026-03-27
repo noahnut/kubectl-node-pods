@@ -1,0 +1,21 @@
+apiVersion: krew.googlecontainertools.github.com/v1alpha2
+kind: Plugin
+metadata:
+  name: {{ .PluginName }}
+spec:
+  version: {{ .Version }}
+  homepage: https://github.com/{{ .Repo }}
+  shortDescription: "Show node pod and resource balance"
+  description: |
+    A kubectl plugin that displays pod counts and CPU/Memory
+    request pressure across nodes to identify scheduling imbalance.
+  platforms:
+{{- range .Platforms }}
+  - selector:
+      matchLabels:
+        os: {{ .OS }}
+        arch: {{ .Arch }}
+    uri: {{ .URI }}
+    sha256: "{{ .SHA256 }}"
+    bin: {{ .Bin }}
+{{- end }}

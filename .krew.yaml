@@ -4,7 +4,7 @@ metadata:
   name: node-pods
 spec:
   version: {{ .TagName }}
-  homepage: https://github.com/noahfan/kubectl-node-pods
+  homepage: https://github.com/noahnut/kubectl-node-pods
   shortDescription: "Show node pod and resource balance"
   description: |
     A kubectl plugin that displays pod counts and CPU/Memory
@@ -14,7 +14,7 @@ spec:
       matchLabels:
         os: linux
         arch: amd64
-    {{addURIAndSha "https://github.com/noahfan/kubectl-node-pods/releases/download/{{ .TagName }}/kubectl-node_pods-linux-amd64.tar.gz" .TagName }}
+    {{addURIAndSha "https://github.com/noahnut/kubectl-node-pods/releases/download/{{ .TagName }}/kubectl-node_pods-linux-amd64.tar.gz" .TagName }}
     bin: kubectl-node_pods
     files:
       - from: LICENSE
@@ -23,7 +23,7 @@ spec:
       matchLabels:
         os: linux
         arch: arm64
-    {{addURIAndSha "https://github.com/noahfan/kubectl-node-pods/releases/download/{{ .TagName }}/kubectl-node_pods-linux-arm64.tar.gz" .TagName }}
+    {{addURIAndSha "https://github.com/noahnut/kubectl-node-pods/releases/download/{{ .TagName }}/kubectl-node_pods-linux-arm64.tar.gz" .TagName }}
     bin: kubectl-node_pods
     files:
       - from: LICENSE
@@ -32,7 +32,7 @@ spec:
       matchLabels:
         os: darwin
         arch: amd64
-    {{addURIAndSha "https://github.com/noahfan/kubectl-node-pods/releases/download/{{ .TagName }}/kubectl-node_pods-darwin-amd64.tar.gz" .TagName }}
+    {{addURIAndSha "https://github.com/noahnut/kubectl-node-pods/releases/download/{{ .TagName }}/kubectl-node_pods-darwin-amd64.tar.gz" .TagName }}
     bin: kubectl-node_pods
     files:
       - from: LICENSE
@@ -41,7 +41,7 @@ spec:
       matchLabels:
         os: darwin
         arch: arm64
-    {{addURIAndSha "https://github.com/noahfan/kubectl-node-pods/releases/download/{{ .TagName }}/kubectl-node_pods-darwin-arm64.tar.gz" .TagName }}
+    {{addURIAndSha "https://github.com/noahnut/kubectl-node-pods/releases/download/{{ .TagName }}/kubectl-node_pods-darwin-arm64.tar.gz" .TagName }}
     bin: kubectl-node_pods
     files:
       - from: LICENSE
